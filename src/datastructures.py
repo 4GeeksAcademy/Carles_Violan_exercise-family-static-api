@@ -8,10 +8,11 @@ update this file to implement the following already declared methods:
 """
 from random import randint
 
+
 class FamilyStructure:
     def __init__(self, last_name):
         self.last_name = last_name
-
+        self._next_id = 1
         # example list of members
         self._members = []
 
@@ -21,15 +22,34 @@ class FamilyStructure:
 
     def add_member(self, member):
         # fill this method and update the return
-        pass
+        member['id']=self._generateId()
+        self._members.append(member)
+       
+        return member
+
+    # def delete_member(self, id):
+    #     # fill this method and update the return
+    #     index = 0;
+    #     for member in self._members:
+    #         print(member)
+    #     #    self._members.pop[id]
+    #         if member['id']==id:
+    #             self._members.pop(id)  
+
+    #     return self._members
+   
+    def get_member(self, id):
+        for member in self._members:
+            if member['id'] == id:
+                return member
+        return None
 
     def delete_member(self, id):
-        # fill this method and update the return
-        pass
-
-    def get_member(self, id):
-        # fill this method and update the return
-        pass
+        for i, member in enumerate(self._members):
+            if member['id'] == id:
+                del self._members[i]
+                return True
+        return False
 
     # this method is done, it returns a list with all the family members
     def get_all_members(self):
