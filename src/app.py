@@ -54,7 +54,6 @@ jackson_family.add_member(Jimy)
 jackson_family.add_member(Carles)
 jackson_family.add_member(Lucia)
 
-# jackson_family.delete_member(65328363)
 
 
 # Handle/serialize errors like a JSON object
@@ -71,18 +70,41 @@ def sitemap():
 def handle_hello():
     # this is how you can use the Family datastructure by calling its methods
     members = jackson_family.get_all_members()
+    if not members:
+            raise APIException("Members not found", status_code=404)       
     response_body = {
 
         "family": members
     }
-
     return jsonify(response_body), 200
 
 @app.route('/members/<int:id>', methods=['GET'])
 def get_one_member(id):
-
         member = jackson_family.get_member(id)
+        if not member:
+            raise APIException("Member not found", status_code=404)       
         return jsonify(member), 200
+
+
+# Agregar un nuevo miembro
+@app.route('/members/', methods=['POST'])
+def add_new_member():
+    member = request.json
+    if not member:
+        raise APIException("Invalid data", status_code=400)
+    
+    jackson_family.add_member(member)
+    return jsonify({"message": "Member added", "member": member}), 201
+
+
+# Eliminar un miembro específico
+@app.route('/members/<int:id>', methods=['DELETE'])
+def delete_one_member(id):
+    success = jackson_family.delete_member(id)
+    if not success:
+        raise APIException("Member not found", status_code=404)
+    return jsonify({"message": "Member deleted"}), 200
+
 
 
 

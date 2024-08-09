@@ -27,16 +27,6 @@ class FamilyStructure:
        
         return member
 
-    # def delete_member(self, id):
-    #     # fill this method and update the return
-    #     index = 0;
-    #     for member in self._members:
-    #         print(member)
-    #     #    self._members.pop[id]
-    #         if member['id']==id:
-    #             self._members.pop(id)  
-
-    #     return self._members
    
     def get_member(self, id):
         for member in self._members:
